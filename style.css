@@ -295,43 +295,29 @@ text-align: left;
 
 input,
 textarea {
-    font: 1em sans-serif;
-    width: 300px;
-    box-sizing: border-box;
-    border: 1px solid #999;
-    border-radius: 8px;
-    height: 30px;
+font: 1em sans-serif;
+width: 300px;
+box-sizing: border-box;
+border: 1px solid #999;
+border-radius: 8px;
+height: 30px;
 }
 
 input:focus,
 textarea:focus {
-    border-color: #000;
+border-color: #000;
 }
 
 textarea {
-    vertical-align: top;
-    height: 5em;
-    border-radius: 8px;
+vertical-align: top;
+height: 5em;
+border-radius: 8px;
 }
 
 .button {
-    padding-left: 90px;
+padding-left: 90px;
 }
 
 button {
-    margin-left: 0.5em;
+margin-left: 0.5em;
 }
-Footer
-© 2023 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
