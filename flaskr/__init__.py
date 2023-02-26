@@ -1,17 +1,11 @@
-# Source: https://flask.palletsprojects.com/en/2.2.x/tutorial/factory/
-# flask --app flaskr run --debug
-# flask --app flaskr init-db
-
 import os
+
 from flask import Flask
 
-# application factory function
+
 def create_app(test_config=None):
     # create and configure the app
-    # __name__ = name of current python module
     app = Flask(__name__, instance_relative_config=True)
-    # SECRET_KEY keeps data safe; 'dev' overriden with a random value when deployed
-    # DATABASE = path where the SQLite database file will be saved
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -30,19 +24,16 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # link: http://127.0.0.1:5000/hello
-    @app.route('/hello')
+    # a simple page that says hello
+    @app.route('/kanban')
     def hello():
         return 'Hello, World!'
-    
+
     from . import db
     db.init_app(app)
     
-    from . import auth
-    app.register_blueprint(auth.bp)
-    
-    from . import blog
-    app.register_blueprint(blog.bp)
+    from . import tasks
+    app.register_blueprint(tasks)
     app.add_url_rule('/', endpoint='index')
 
     return app
