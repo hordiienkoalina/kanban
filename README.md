@@ -1,1 +1,1 @@
-I got stuck on getting the following errro: "module 'flaskr.tasks' has no attribute 'register". This is my second time going through the tutorial, and things are definitely more clear, but I definitely feel that I do not understand exactly every line of code, which makes it mode difficult to debug.
+Instructions: https://github.com/minerva-university/cs162/blob/1e6a861f165b8e0abef77fb3b4a885ceb25eda5a/assignments/web_application.md

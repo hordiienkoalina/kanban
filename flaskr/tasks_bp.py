@@ -1,5 +1,5 @@
-from flask import Blueprint
+# from flask import Blueprint
 
-bp = Blueprint('tasks', __name__)
+# bp = Blueprint('tasks', __name__)
 
-from . import routes
+# from . import _routes
