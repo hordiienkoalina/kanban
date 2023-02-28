@@ -2,7 +2,7 @@
 # 2. flask --app flaskr run --debug
 
 import os
-from flask import Flask
+from flask import Flask, render_template
 
 def create_app(test_config=None):
     # creates and configures the app
@@ -33,7 +33,7 @@ def create_app(test_config=None):
     
     @app.route('/kanban')
     def kanban():
-        return 'Kanban Coming Soon!'
+        return render_template('kanban.html', title='Kanban!')
 
     # connects database
     from . import db
