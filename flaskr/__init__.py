@@ -3,6 +3,7 @@
 
 import os
 from flask import Flask, render_template
+from .forms import RegistrationForm, LoginForm
 
 def create_app(test_config=None):
     # creates and configures the app
@@ -33,7 +34,17 @@ def create_app(test_config=None):
     
     @app.route('/kanban')
     def kanban():
-        return render_template('kanban.html', title='Kanban!')
+        return render_template('kanban.html', title='Board - Kanban!')
+    
+    @app.route('/register')
+    def register():
+        form = RegistrationForm()
+        return render_template('register.html', title='Register - Kanban!', form=form)
+    
+    @app.route('/login')
+    def login():
+        form = LoginForm()
+        return render_template('register.html', title='Log In - Kanban!', form=form)
 
     # connects database
     from . import db
