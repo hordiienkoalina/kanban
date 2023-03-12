@@ -1,8 +1,6 @@
-# 1. initilise virtual environment (in cd kanban) python3 -m venv venv
-# 2. flask --app flaskr run --debug
-
 import os
 from flask import Flask, render_template, url_for, flash, redirect
+from flask_sqlalchemy import SQLAlchemy
 from .forms import RegistrationForm, LoginForm
 
 def create_app(test_config=None):
@@ -12,6 +10,19 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite')
     )
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+    db = SQLAlchemy(app)
+    
+    class Task(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        title = db.Column(db.String(100), nullable=False)
+        description = db.Column(db.String(200))
+        status = db.Column(db.String(20), default='ToDo')
+        # Together, user_id and user allow us to create a one-to-many relationship between the User and Task classes.
+        # This means that a single user can have many tasks associated with them, 
+        # but each task can only belong to one user.
+        user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+        user = db.relationship('User', backref=db.backref('tasks', lazy=True))
     
     if test_config is None:
         # loads the instance config, if it exists, when not testing
@@ -52,8 +63,8 @@ def create_app(test_config=None):
         return render_template('login.html', title='Log In - Kanban!', form=form)
 
     # connects database
-    from . import db
-    db.init_app(app)
+    # from . import db
+    # db.init_app(app)
     
     # connects blueprint
     # from . import tasks
