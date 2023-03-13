@@ -4,7 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from .forms import RegistrationForm, LoginForm
 
 def create_app(test_config=None):
-    # creates and configures the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -18,26 +17,20 @@ def create_app(test_config=None):
         title = db.Column(db.String(100), nullable=False)
         description = db.Column(db.String(200))
         status = db.Column(db.String(20), default='ToDo')
-        # Together, user_id and user allow us to create a one-to-many relationship between the User and Task classes.
-        # This means that a single user can have many tasks associated with them, 
-        # but each task can only belong to one user.
         user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
         user = db.relationship('User', backref=db.backref('tasks', lazy=True))
     
     if test_config is None:
-        # loads the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
     else:
-        # loads the test config if passed in
         app.config.from_mapping(test_config)
     
-    # ensures the instance folder exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # kanban as homepage
+    
+    # move this to /routes
     @app.route('/')
     @app.route('/home')
     def home():
@@ -61,14 +54,5 @@ def create_app(test_config=None):
             else:
                 flash('Login Unsuccessful. Please check username and password', 'danger')
         return render_template('login.html', title='Log In - Kanban!', form=form)
-
-    # connects database
-    # from . import db
-    # db.init_app(app)
-    
-    # connects blueprint
-    # from . import tasks
-    # app.register_blueprint(tasks)
-    # app.add_url_rule('/', endpoint='index')
 
     return app

@@ -13,5 +13,5 @@ https://github.com/minerva-university/cs162/blob/1e6a861f165b8e0abef77fb3b4a885c
 1. python3 -m venv venv
 2. source test-venv/bin/activate
 3. flask --app flaskr run --debug
-4. pip install requirements.txt
+4. pip install -r ~/Dev/kanban/requirements.txt   
 ```
