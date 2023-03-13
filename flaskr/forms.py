@@ -1,4 +1,4 @@
-# auth forms: login and registration
+# Auth Forms: Log In and Sign Up
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField

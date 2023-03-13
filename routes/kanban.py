@@ -1,3 +1,6 @@
+# Kanban Blueprint
+# NEEDS FIXING
+
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, current_user
 from flaskr.models import Task, db
@@ -10,7 +13,7 @@ def board():
     todo_tasks = Task.query.filter_by(status='ToDo', user_id=current_user.id).all()
     doing_tasks = Task.query.filter_by(status='Doing', user_id=current_user.id).all()
     done_tasks = Task.query.filter_by(status='Done', user_id=current_user.id).all()
-    return render_template('board.html', title='Board - Kanban!', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks)
+    return render_template('kanban.html', title='Board - Kanban!', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks)
 
 @kanban.route('/add_task', methods=['POST'])
 @login_required
