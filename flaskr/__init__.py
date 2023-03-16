@@ -20,10 +20,10 @@ def create_app():
     login_manager.init_app(app)
     bootstrap.init_app(app)
 
-    from routes.auth import auth as auth_blueprint
+    from flaskr.routes.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
-    from routes.kanban import kanban as kanban_blueprint
+    from flaskr.routes.kanban import kanban as kanban_blueprint
     app.register_blueprint(kanban_blueprint)
 
     return app
