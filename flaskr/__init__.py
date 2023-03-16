@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from instance.config import Config
 
+
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()

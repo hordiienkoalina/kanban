@@ -19,7 +19,7 @@ python3 run.py
 ```
 ## Initialise DB
 ```
-export FLASK_APP=app.py
+export FLASK_APP="flaskr:create_app()" 
 flask db init
 flask db migrate -m "test"
 flask db upgrade
@@ -28,10 +28,13 @@ flask db upgrade
 ```
 python3 -m unittest discover
 ```
+and/or
+```
+coverage run run_tests.py
+coverage report
+coverage html
+```
+
 
 ## Sources
 1. https://github.com/CoreyMSchafer/code_snippets/tree/master/Python/Flask_Blog
-2. https://github.com/cleysondiego/simple-kanban-board/tree/master 
-
-## Assignment Instructions
-https://github.com/minerva-university/cs162/blob/1e6a861f165b8e0abef77fb3b4a885ceb25eda5a/assignments/web_application.md
