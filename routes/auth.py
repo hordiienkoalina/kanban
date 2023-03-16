@@ -61,7 +61,6 @@ def signup_post():
     with current_app.app_context():
         # Get the email, password, and remember me status from the login form
         email = request.form.get('email')
-        username = request.form.get('username')
         password = request.form.get('password')
 
         # Get the user with the submitted email address from the database
@@ -73,7 +72,7 @@ def signup_post():
             return redirect(url_for('auth.signup'))
 
         # If Signup successful, add user to DB and commit
-        new_user = User(email=email, username=username, password=generate_password_hash(password, method='sha256'))
+        new_user = User(email=email, password=generate_password_hash(password, method='sha256'))
         db.session.add(new_user)
         db.session.commit()
 
