@@ -32,11 +32,8 @@ class User(UserMixin, db.Model):
 class Task(db.Model):
     # Task model atrributes
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(140))
-    # description = db.Column(db.String(280))
-    # priority = db.Column(db.Integer)
-    status = db.Column(db.String(20))
-    # timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    title = db.Column(db.String(140), nullable=False)
+    status = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     # Representation of Task as title string

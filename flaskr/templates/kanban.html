@@ -1,70 +1,105 @@
-<!-- must be changed to utilise Bootstrap -->
+{% extends "layout.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-    
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kanban!</title>
-<link rel="stylesheet" href="static/style.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800,900" rel="stylesheet">
-</head>
-
-<body>
-<div class="boards">
-    <button class="trigger">+ Add Task</button>
-        <div class="modal">
-        <div class="modal-content">
-            <form action="/my-handling-form-page" method="post">
-                <ul>
-                    <h3>Add New Task</h3>
-                    <li>
-                    <label for="name">Title:</label>
-                    <input type="text" id="name" name="user_name" />
-                    </li>
-                    <li>
-                    <label for="msg">Description:</label>
-                    <textarea id="msg" name="user_message"></textarea>
-                    </li>
-                </ul>
-                </form>
-        <span class="close-button">×</span>
-    </div>
-    </div>
-
-    <div class="board">
-    <h3>TODO</h3>
-    <div class="dropzone">
-        <div class="card" draggable="true">
-        <div class="status red"></div>
-        <div class="content">Do my personal site</div>
+{% block content %}
+    <style>
+        .card {
+            background-color: #F8F9FA;
+        }
+    </style>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <input type="text" id="task-title" class="form-control" placeholder="Enter task title" aria-label="Task title" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="button-addon2" onclick="addTask()">Add Task</button>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 class="text-center">To Do</h3>
+                    <hr>
+                    {% for task in todo_tasks %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ task.title }}</h5>
+                                <p class="card-text">{{ task.description }}</p>
+                                <form action="{{ url_for('kanban.move_task', task_id=task.id) }}" method="post">
+                                    <div class="form-group">
+                                        <select name="status" class="form-control" onchange="this.form.submit()">
+                                            <option value="ToDo" {% if task.status == 'ToDo' %}selected{% endif %}>To Do</option>
+                                            <option value="Doing" {% if task.status == 'Doing' %}selected{% endif %}>Doing</option>
+                                            <option value="Done" {% if task.status == 'Done' %}selected{% endif %}>Done</option>
+                                        </select>
+                                    </div>
+                                </form>
+                                <form action="{{ url_for('kanban.delete_task', task_id=task.id) }}" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
 
-    <div class="board">
-    <h3>In Progress</h3>
-    <div class="dropzone">
-        <div class="card" draggable="true">
-        <div class="status blue"></div>
-        <div class="content">Study</div>
-        </div>
-    </div>
-    </div>
+                <div class="col-md-4">
+                    <h3 class="text-center">Doing</h3>
+                    <hr>
+                    {% for task in doing_tasks %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ task.title }}</h5>
+                                <p class="card-text">{{ task.description }}</p>
+                                <form action="{{ url_for('kanban.move_task', task_id=task.id) }}" method="post">
+                                    <div class="form-group">
+                                        <select name="status" class="form-control" onchange="this.form.submit()">
+                                            <option value="ToDo" {% if task.status == 'ToDo' %}selected{% endif %}>To Do</option>
+                                            <option value="Doing" {% if task.status == 'Doing' %}selected{% endif %}>Doing</option>
+                                            <option value="Done" {% if task.status == 'Done' %}selected{% endif %}>Done</option>
+                                        </select>
+                                    </div>
+                                </form>
+                                <form action="{{ url_for('kanban.delete_task', task_id=task.id) }}" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
 
-    <div class="board">
-    <h3>Done</h3>
-    <div class="dropzone">
-        <div class="card" draggable="true">
-        <div class="status green"></div>
-        <div class="content">Do Simple Kanban Board</div>
-        </div>
-    </div>
-    </div>
-    
-</div>
+                <div class="col-md-4">
+                    <h3 class="text-center">Done</h3>
+                    <hr>
+                    {% for task in done_tasks %}
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ task.title }}</h5>
+                                <p class="card-text">{{ task.description }}</p>
+                                <form action="{{ url_for('kanban.move_task', task_id=task.id) }}" method="post">
+                                    <div class="form-group">
+                                        <select name="status" class="form-control" onchange="this.form.submit()">
+                                            <option value="ToDo" {% if task.status == 'ToDo' %}selected{% endif %}>To Do</option>
+                                            <option value="Doing" {% if task.status == 'Doing' %}selected{% endif %}>Doing</option>
+                                            <option value="Done" {% if task.status == 'Done' %}selected{% endif %}>Done</option>
+                                        </select>
+                                    </div>
+                                </form>
+                                <form action="{{ url_for('kanban.delete_task', task_id=task.id) }}" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+{% endblock %}
 
-<script src="static/script.js" defer></script>
-</body>
-</html>
+{% block scripts %}
+    <script>
+        $(document).ready(function() {
+        $(".alert").fadeOut(5000);
+        });
+    </script>
+{% endblock %}
