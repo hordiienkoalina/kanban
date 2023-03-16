@@ -1,5 +1,5 @@
 # Kanban
-
+Github link: https://github.com/hordiienkoalina/kanban
 ## Kanban App
 This Kanban app is a simple, yet powerful task management tool designed to help you organize and prioritize your tasks effectively. It is built using Python, Flask, and SQLite, providing a lightweight and easy-to-use solution for managing tasks in a visual way.
 
