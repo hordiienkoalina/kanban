@@ -18,13 +18,14 @@ build/
 docs/_build/
 .vscode
 test-venv
-__pycache__
+flaskr/__pycache__
+*.pyc
+instance/app.db
+migrations/
+.DS_Store
 
 # Coverage reports
 htmlcov/
 .coverage
 .coverage.*
 *,cover
-*.pyc
-instance/app.db
-migrations/
