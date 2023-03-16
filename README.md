@@ -17,7 +17,13 @@ test-venv\Scripts\activate.bat
 pip3 install -r requirements.txt
 python3 run.py
 ```
-
+## Initialise DB
+```
+export FLASK_APP=app.py
+flask db init
+flask db migrate -m "test"
+flask db upgrade
+```
 ## Testing
 ```
 python3 -m unittest discover

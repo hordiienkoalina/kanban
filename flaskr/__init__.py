@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -26,5 +25,5 @@ def create_app():
 
     from routes.kanban import kanban as kanban_blueprint
     app.register_blueprint(kanban_blueprint)
-    
+
     return app

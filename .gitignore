@@ -27,3 +27,4 @@ htmlcov/
 *,cover
 *.pyc
 instance/app.db
+migrations/
