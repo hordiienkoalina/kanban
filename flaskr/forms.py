@@ -25,5 +25,5 @@ class LoginForm(FlaskForm):
     
 class AddTaskForm(FlaskForm):
     title = StringField(validators=[DataRequired()], render_kw={'placeholder': 'Task Title'})
-    status = HiddenField('Task Status', validators=[DataRequired()], default="To Do")
+    status = HiddenField('Task Status', validators=[DataRequired()], default="ToDo")
     submit = SubmitField('Add Task')
