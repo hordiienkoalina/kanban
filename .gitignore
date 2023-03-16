@@ -26,4 +26,4 @@ htmlcov/
 .coverage.*
 *,cover
 *.pyc
-instance/
+instance/app.db
