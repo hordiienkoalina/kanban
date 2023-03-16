@@ -78,3 +78,16 @@ margin-bottom: 16px;
 .account-heading {
 font-size: 2.5rem;
 }
+
+.form-and-boards {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-task-form {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 10px;
+margin-bottom: 20px;
+}

@@ -1,7 +1,7 @@
 # Kanban Blueprint
 # NEEDS FIXING
 
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 from flaskr.models import Task, db
 from flaskr.forms import AddTaskForm
@@ -9,24 +9,32 @@ from flask_wtf.csrf import generate_csrf
 
 kanban = Blueprint('kanban', __name__)
 
-@kanban.route('/board')
+@kanban.route('/board', methods=['GET', 'POST'])
 @login_required
 def board():
-    # Get all tasks of the user filtered by status
-    todo_tasks = Task.query.filter_by(status='ToDo', user_id=current_user.id).all()
-    doing_tasks = Task.query.filter_by(status='Doing', user_id=current_user.id).all()
-    done_tasks = Task.query.filter_by(status='Done', user_id=current_user.id).all()
-    # Render the kanban board template with the tasks
-    csrf_token = generate_csrf()
-    return render_template('kanban.html', title='Board - Kanban!', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks, csrf_token=csrf_token)
+    form = AddTaskForm()
+    if form.validate_on_submit():
+        task = Task(title=form.title.data, status=form.status.data, user_id=current_user.id)
+        db.session.add(task)
+        db.session.commit()
+        flash('Task added successfully.', 'success')
+        return redirect(url_for('kanban.board'))
 
-@kanban.route('/add-task', methods=['POST'])
+    todo_tasks = Task.query.filter_by(user_id=current_user.id, status='ToDo').all()
+    doing_tasks = Task.query.filter_by(user_id=current_user.id, status='Doing').all()
+    done_tasks = Task.query.filter_by(user_id=current_user.id, status='Done').all()
+
+    return render_template('kanban.html', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks, form=form, csrf_token=form.csrf_token._value())
+
+
+@kanban.route('/add_task', methods=['POST'])
 @login_required
 def add_task():
-    form = AddTaskForm(request.form)
-    if form.validate():
-        task = Task(title=form.task_title.data, status=form.task_status.data, user_id=current_user.id)
-        db.session.add(task)
+    form = AddTaskForm()
+
+    if form.validate_on_submit():
+        new_task = Task(title=form.title.data, status=form.status.data, user_id=current_user.id)
+        db.session.add(new_task)
         db.session.commit()
         flash('Task added successfully', 'success')
     else:
@@ -34,7 +42,9 @@ def add_task():
         for field, errors in form.errors.items():
             for error in errors:
                 flash(f"{field}: {error}", 'danger')
+
     return redirect(url_for('kanban.board'))
+
 
 
 @kanban.route('/delete_task/<int:task_id>',  methods=['POST', 'GET'])
