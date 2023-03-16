@@ -26,27 +26,6 @@ def board():
 
     return render_template('kanban.html', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks, form=form, csrf_token=form.csrf_token._value())
 
-
-@kanban.route('/add_task', methods=['POST'])
-@login_required
-def add_task():
-    form = AddTaskForm()
-
-    if form.validate_on_submit():
-        new_task = Task(title=form.title.data, status=form.status.data, user_id=current_user.id)
-        db.session.add(new_task)
-        db.session.commit()
-        flash('Task added successfully', 'success')
-    else:
-        flash('Failed to add task', 'danger')
-        for field, errors in form.errors.items():
-            for error in errors:
-                flash(f"{field}: {error}", 'danger')
-
-    return redirect(url_for('kanban.board'))
-
-
-
 @kanban.route('/delete_task/<int:task_id>',  methods=['POST', 'GET'])
 @login_required
 def delete_task(task_id):

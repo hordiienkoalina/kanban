@@ -86,18 +86,3 @@
                     </div>
                 </div>
     {% endblock %}
-
-{% block scripts %}
-    <script>
-        function addTask() {
-            let taskTitle = $("#task-title").val().trim();
-            if (taskTitle) {
-                let $form = $("#add-task-form");
-                $form.append(`<input type="hidden" name="title" value="${taskTitle}">`);
-                $form.submit();
-            } else {
-                alert("Please enter a task title");
-            }
-        }
-    </script>
-{% endblock %}
