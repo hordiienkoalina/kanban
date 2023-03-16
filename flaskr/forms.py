@@ -1,7 +1,7 @@
 # Auth Forms: Log In and Sign Up
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, HiddenField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class SignupForm(FlaskForm):
@@ -23,7 +23,6 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField("Log In")
     
-class NewTaskForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    status = SelectField('Status', choices=[('todo', 'To Do'), ('inprogress', 'In Progress'), ('done', 'Done')], validators=[DataRequired()])
-    submit = SubmitField('Add Task')
+class AddTaskForm(FlaskForm):
+    task_title = StringField('Task Title', validators=[DataRequired()])
+    task_status = HiddenField('Task Status', validators=[DataRequired()])

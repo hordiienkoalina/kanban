@@ -4,7 +4,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flaskr.models import Task, db
-from flaskr.forms import NewTaskForm
+from flaskr.forms import AddTaskForm
+from flask_wtf.csrf import generate_csrf
 
 kanban = Blueprint('kanban', __name__)
 
@@ -16,25 +17,26 @@ def board():
     doing_tasks = Task.query.filter_by(status='Doing', user_id=current_user.id).all()
     done_tasks = Task.query.filter_by(status='Done', user_id=current_user.id).all()
     # Render the kanban board template with the tasks
-    return render_template('kanban.html', title='Board - Kanban!', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks)
+    csrf_token = generate_csrf()
+    return render_template('kanban.html', title='Board - Kanban!', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks, csrf_token=csrf_token)
 
-@kanban.route('/add_task', methods=['POST', 'GET'])
+@kanban.route('/add-task', methods=['POST'])
 @login_required
 def add_task():
-    form = NewTaskForm()
-    if form.validate_on_submit():
-        # Get the form data for title
-        title = request.form['title']
-        # Create a new Task object with the form data
-        task = Task(title=title, status="todo")
-        # Add the task to the database
+    form = AddTaskForm(request.form)
+    if form.validate():
+        task = Task(title=form.task_title.data, status=form.task_status.data, user_id=current_user.id)
         db.session.add(task)
         db.session.commit()
-        # Flash a success message to be displayed on the next request
-        flash(f'Task "{title}" created!', 'success')
-        # Redirect to the kanban board page
-    return redirect(url_for('kanban'))
-    
+        flash('Task added successfully', 'success')
+    else:
+        flash('Failed to add task', 'danger')
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f"{field}: {error}", 'danger')
+    return redirect(url_for('kanban.board'))
+
+
 @kanban.route('/delete_task/<int:task_id>',  methods=['POST', 'GET'])
 @login_required
 def delete_task(task_id):

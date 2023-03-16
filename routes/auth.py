@@ -14,7 +14,7 @@ auth = Blueprint('auth', __name__)
 @auth.route('/')
 @auth.route('/home')
 def home():
-    return render_template('kanban.html')
+    return redirect(url_for('kanban.board'))
 
 @auth.route('/login')
 def login():
