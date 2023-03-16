@@ -7,13 +7,15 @@ This Kanban app is a simple, yet powerful task management tool designed to help 
 1. **User authentication**: The app allows users to sign up, log in, and log out, ensuring that tasks are only accessible to their respective users.
 2. **Task managemen**t: Users can create, edit, and delete tasks with customizable titles and descriptions.
 3. **Responsive design**: The app is built using Flask-Bootstrap, making it responsive and mobile-friendly.
-### Tech Stack
+
+### Tech Stack
 1. **Backend**: Python 3, Flask, Flask-SQLAlchemy, Flask-Migrate, Flask-Login
 2. **Frontend**: HTML, CSS, JavaScript, Bootstrap
 3. **Database**: SQLite
 4. **Testing**: Python's unittest module
 
-To get started with this Kanban app, simply follow the installation instructions provided in the repository. Enjoy organizing your tasks and improving your productivity with this intuitive and user-friendly tool!
+## Demo
+Link: https://drive.google.com/file/d/1P9Kq6GhotpM4LNTaS8jO0fWUPr08JeFO/view?usp=sharing
 ## Install
 macOS:
 ```
