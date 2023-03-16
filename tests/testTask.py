@@ -32,6 +32,7 @@ class TestKanban(unittest.TestCase):
             # Check if the task was successfully added
             self.assertIn(b'Test Task', response.data)
 
+    # Getting rid of dummy info created above
     def tearDown(self):
         with self.app.app_context():
             db.session.remove()

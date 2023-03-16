@@ -24,17 +24,7 @@ def board():
     todo_tasks = Task.query.filter_by(user_id=current_user.id, status='ToDo').all()
     doing_tasks = Task.query.filter_by(user_id=current_user.id, status='Doing').all()
     done_tasks = Task.query.filter_by(user_id=current_user.id, status='Done').all()
-
-    # todo_tasks = Task.query.filter_by(status='ToDo').all()
-    # doing_tasks = Task.query.filter_by(status='Doing').all()
-    # done_tasks = Task.query.filter_by(status='Done').all()
-
-    print(f"All tasks: {all_tasks}")
-    print(f"ToDo tasks: {todo_tasks}")
-    print(f"Doing tasks: {doing_tasks}")
-    print(f"Done tasks: {done_tasks}")
     
-
     return render_template('kanban.html', todo_tasks=todo_tasks, doing_tasks=doing_tasks, done_tasks=done_tasks, form=form, csrf_token=form.csrf_token._value())
 
 @kanban.route('/delete_task/<int:task_id>',  methods=['POST', 'GET'])
